@@ -1,0 +1,178 @@
+
+#map_canvas {
+	margin-bottom: 0;
+	width: 100%; 
+}
+
+.posterlist .row-fluid {
+	margin-bottom: 1em;
+}
+
+.share-links {
+	margin-top: 1.2em;
+}
+
+.current-location-placeholder::-webkit-input-placeholder {
+	color: #59F !important;
+	font-weight: 500;
+}
+
+.current-location-placeholder:-moz-placeholder {
+	color: #59F !important;
+	font-weight: 500;
+}
+
+.current-location-placeholder:-ms-input-placeholder {
+	color: #59F !important;
+	font-weight: 500;
+}
+
+#login-bar {
+	line-height: 35px;
+}
+
+#login-and-search-bar {
+	margin-top: 1em;
+}
+
+#login-and-search-bar form {
+	margin-bottom: 0;
+}
+
+#tracking-forms select,
+#tracking-forms input {
+	margin-bottom: 0;
+}
+
+#tracking-forms button {
+	width: 150px;
+}
+
+/* desktop only */
+@media (min-width: 767px) {
+	body {
+		padding-top: 1em;
+		font-size: 1.2em;
+	}
+	
+	#map_canvas {
+		height: 450px;
+	}
+
+	.usually-hidden {
+		height: 3em;
+		margin-bottom: 1em;
+		overflow: hidden;
+		-moz-box-shadow:    inset 0 0 10px -10px #ccc;
+		-webkit-box-shadow: inset 0 0 10px -10px #ccc;
+		box-shadow:         inset 0 0 10px -10px #ccc;
+		
+		transition: height 0.4s;
+		-moz-transition: height 0.4s; /* Firefox 4 */
+		-webkit-transition: height 0.4s; /* Safari and Chrome */
+		-o-transition: height 0.4s; /* Opera */
+	}
+
+	.usually-hidden:hover {
+		height: 14em;
+		-moz-box-shadow:    none;
+		-webkit-box-shadow: none;
+		box-shadow:         none;
+	}
+}
+
+/* mobile only */
+@media (max-width: 767px) {
+	body {
+		padding: 0;
+		font-size: 0.8;
+	}
+
+	#map_canvas {
+		height: 200px;
+	}
+	
+	.logo {
+		text-align: center;
+		font-size: 2em;
+		margin: 0.3em;
+	}
+	
+	#submit-poster-form {
+		padding-top: 3px;
+	}
+	
+	#submit-poster-form h2 {
+		font-size: 1.4em;
+		margin-top: 3px;
+	}
+	
+	#submit-poster-form .control-label {
+		text-align: right;
+		margin-right: 1em;
+		display: inline-block;
+		width: 27%;
+	}
+	
+	#submit-poster-form .controls {
+		display: inline-block;
+		width: 67%;
+	}
+	
+	#submit-poster-form input {
+		width: 100%;
+	}
+	
+	.posterlist .row-fluid {
+		line-height: 1.2em;
+		margin-bottom: 3px;
+	}
+	
+	p {
+		margin-top: 2px;
+		margin-bottom: 2px;
+	}
+	
+	h1 {
+		font-size: 1.2em;
+		line-height: 1em;
+		margin-bottom: 0;
+	}
+	
+	h1 small {
+		font-size: 0.9em;
+	}
+}
+
+/* phones in portrait */
+@media (max-width: 400px) {
+	#submit-poster-form {
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+		border-radius: 0;
+	}
+	
+	#below-map {
+		margin: 1em;
+	}
+}
+
+/* wider than phones in portrait */
+@media (min-width: 400px) {
+	body {
+		padding: 1em;
+		padding-top: 0em;
+		font-size: 1.0em;
+	}
+}
+
+/* unused; for base2.html */
+.large-form .input-xlarge {
+	font-size: 1.5em !important;
+	height: 1.4em !important;
+}
+
+.large-form label.control-label {
+	font-size: 1.5em !important;
+}
+

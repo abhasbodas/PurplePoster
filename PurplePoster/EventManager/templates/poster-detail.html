@@ -1,0 +1,132 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+
+
+{% block title %}
+{{ poster.movie.name }} is filming {{ poster.startTime|naturalday:"l, F j" }}
+
+{% endblock %}
+
+
+{% block content %}
+
+{% include "poster-summary.html" %}
+
+
+
+<div class="row-fluid share-links">
+	<div class="span6">
+		{% if user.is_authenticated %}
+		<form method="post" action="trackmovie/">
+			{% csrf_token %}
+			<input type="hidden" name="movie-id" value="{{ poster.movie.pk }}" />
+		
+			{% if poster.movie not in user.getPreference.movie.all %}
+			<button class="btn btn-primary" type="submit">
+			{% else %}
+			<button class="btn btn-primary disabled" type="button">
+			{% endif %}
+				
+			Track this movie
+			</button>
+		</form>
+		{% else %}
+		login/signup to track movies and actors
+		{% endif %}
+	</div>
+	
+	<div class="pull-right">
+		<a target="blank" href="http://facebook.com/sharer.php?u=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23map_info">
+			<button class="btn btn-primary" type="button">
+				Share on Facebook
+			</button>
+		</a>
+		<a target="blank" href="http://twitter.com/share?text=See%20{{poster.movie.name}}%20filming&url=jpochtar.cs.columbia.edu/poster/{{poster.pk}}/%23map_info">
+			<button class="btn btn-primary" type="button">
+				Tweet this
+			</button>
+		</a>
+	</div>
+</div>
+
+<hr>
+
+{% if poster.movie.actor.all %}
+<div class="row-fluid" id="actors">
+	<h3>Actors that might be there</h3>
+	
+	{% for actor in poster.movie.actor.all %}
+	<div class="row-fluid">
+		{{ actor.actorName }}
+	</div>
+	{% endfor %}
+	
+</div>
+{% endif %}
+
+
+{% if poster.movie.summary %}
+<div class="row-fluid" id="images">
+	<h3>Movie synopsis</h3>
+	{{ poster.movie.summary }}
+</div>
+{% endif %}
+
+{% if poster.movie.releaseDate %}
+<div class="row-fluid" id="images">
+	<h3>Release Date</h3>
+	{{ poster.movie.releaseDate }}
+</div>
+{% endif %}
+
+
+{% if poster.movie.poster.all %}
+<div class="row-fluid" id="images">
+	<h3>Images for this movie</h3>
+	
+	{% for p in poster.movie.poster.all %}
+	<div class="row-fluid">
+		
+		<img src = "{{ p.posterURL }}" ><P>
+	</div>
+	{% endfor %}
+	
+</div>
+{% endif %}
+
+
+{% if poster.comment.all %}
+<div class="row-fluid" id="comments">
+	<h3>User Comments</h3>
+	{% for com in poster.comment.all %}
+	<div class="row-fluid">
+		<B>Submitted by: {{ com.submitter }} </B> --  {{ com.commentText }} <P>
+	</div>
+	{% endfor %}
+</div>
+{% endif %}
+
+
+<h3>Submit a comment</h3>
+<div id="comment-forms">
+	<form method="post" action="addComment/">
+	{% csrf_token %}
+		<div class="control-group">
+			<div class="controls">
+				<textarea  name="comment-text" cols="50" rows="5" p>My comments here
+				</textarea>
+			</div>
+		</div>
+		<input type="hidden" name="pp" value="{{ poster.pk }}"></input>
+
+		<button class="btn btn-primary" type="submit">
+			Submit Comment!
+		</button>
+	</form>
+</div>
+<P>&nbsp<P>
+
+
+
+{% endblock %}

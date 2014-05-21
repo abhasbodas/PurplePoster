@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="posterlist">
+{% for poster in poster_list %}
+	<div class="row-fluid">
+	{% include "poster-summary.html" with linkToPosterDetail="Y" %}
+	</div>
+{% empty %}
+	No Purple Posters are available.
+{% endfor %}
+</div>
+
+{% endblock %}
+

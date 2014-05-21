@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+<head>
+	<title>{% block title %}PurplePoster{% endblock %}</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0">
+	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+	<link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css" />
+
+	<script src="{{ STATIC_URL }}geo.js" type="text/javascript"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBBDkCR-KXvwvdS6N9SayllgcyH23qZkhE&sensor=false" type="text/javascript"></script>
+
+    <script>
+    $(function() {
+        $( "#datepicker" ).datepicker();
+    });
+    </script>
+    
+   	<link href="{{ STATIC_URL }}base.css" rel="stylesheet" media="screen">
+	<script src="{{ STATIC_URL }}main.js" type="text/javascript"></script>
+</head>
+
+<body onload="pageloaded()">
+
+<div class="container">
+	<h1 class="logo">
+	<a href="/">PurplePoster</a>
+	</h1>
+</div>
+
+<div class="container">
+	<div class="row-fluid">
+		<div class="span4">
+			<div class="well clearfix" id="submit-poster-form">
+				<h2>Saw a filming poster?</h2>
+				<form method="post" action="/submitpurpleposter/">
+					{% csrf_token %}
+					<div class="control-group">
+						<label class="control-label" for="project-name">
+							It's called
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="project-name" placeholder="Magnus Rex" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="project-name">
+							but really is
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="real-name" placeholder="The Dark Knight Rises (optional)" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="filming-date">
+							and it's on
+						</label>
+						<div class="controls">
+							<input type="text" id="datepicker" class="input-large input-block-level" name="filming-date" placeholder="Click to see calendar" value="{% now "m/d/Y" %}" />
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="filming-date">
+							and it's at
+						</label>
+						<div class="controls">
+							<input type="text" class="input-large input-block-level" name="filming-location" placeholder="83rd and 5th" />
+						</div>
+					</div>
+					<button class="pull-right btn btn-large btn-primary" type="submit">
+						Tell Everyone!
+					</button>
+					
+					<input type="hidden" name="location-lat" value=""></input>
+					<input type="hidden" name="location-lon" value=""></input>
+				</form>
+			</div>
+		</div>
+		<div class="span8">
+			{% block mainblock %}
+			
+			<div id="map_canvas"></div>
+			
+			<div id="below-map">			
+				<div class="row-fluid" id="login-and-search-bar">
+					<div class="span6" id="login-bar">
+						{% if user.is_authenticated %}	
+						{{ user.username }} | <a href="/user/">manage alerts</a> | <a href="logout/">logout</a>
+						{% else %}
+						<a href="login/">login</a> | <a href="signup/">signup</a>
+						{% endif %}
+					</div>
+					<div class="span6">
+						<form method="get" class="form-search pull-right" action="/searchposters/#map_canvas">
+							<input name="search-string" class="search-query" type="text" placeholder="Poster Search">
+							<button type="submit" class="btn">Go</button>
+						</form>
+					</div>
+				</div>
+			
+				<div class="content">
+				{% block content %}
+				{% endblock %}
+				</div>
+			</div>
+			
+			{% endblock%}
+		</div>
+	</div>
+
+</div>
+</body>
+
+</html>
+

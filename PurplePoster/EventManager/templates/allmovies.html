@@ -1,0 +1,7 @@
+<form method="POST">
+<select name="movie">
+{% for movie in movies %}
+    <option value="{{ movie.name }}">{{ movie.name }}</option>
+{% endfor %}
+</select>
+</form>

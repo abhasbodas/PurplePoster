@@ -1,0 +1,112 @@
+
+{% extends "base.html" %}
+
+{% block mainblock %}
+
+<a class="pull-right" href="/logout/">logout</a>
+
+<h3>Tracking Information</h3>
+<hr />
+<div class="row-fluid">
+	<div class="span6" id="tracking-forms">
+		<div id="track-movie-form">
+			<form method="post" action="trackmovie/" >
+			{% csrf_token %}
+				<select name="movie-id">
+				{% for movie in movies %}
+					<option value="{{ movie.id }}">{{ movie.name }}</option>
+				{% endfor %}
+				</select>
+				<button class="btn btn-primary" type="submit">
+				Track this movie
+				</button>
+			</form>
+		</div>
+
+		<div id="track-actor-form">
+			<form method="post" action="trackactor/">
+			{% csrf_token %}
+				<select name="actor-id" >
+				{% for actor in actors %}
+					<option value="{{ actor.id }}">{{ actor.actorName }}</option>
+				{% endfor %}
+				</select>
+				<button class="btn btn-primary" type="submit">
+				Track this celebrity
+				</button>
+			</form>
+		</div>
+
+		<div id="track-poster-form">
+			<form method="post" action="trackposter/">
+			{% csrf_token %}
+				<select name="poster-id">
+				{% for poster in posters %}
+					<option value="{{ poster.id }}">{{ poster.alias }} - {{ poster.movie.name }}</option>
+				{% endfor %}
+				</select>
+				<button class="btn btn-primary" type="submit">
+				Track this poster
+				</button>
+			</form>
+		</div>
+	
+		<div id="track-location-form">
+			<form method="post" action="tracklocation/">
+			{% csrf_token %}
+				<input type="text" name="location-address" placeholder="83rd and 5th" />
+				<button class="btn btn-primary" type="submit">
+				Add an area!
+				</button>
+			</form>
+		</div>
+	</div>
+	
+	<div class="span6">
+	<h5>Movies:</h5>
+	<div id="user-movie">
+			{% for user_movie in user_movies %}
+				{{ user_movie.name }} </br>
+			{% endfor %}
+	</div>	
+	</br><h5>Celebrities:</h5>
+	<div id="user-actor">
+			{% for user_actor in user_actors %}
+				{{ user_actor.actorName }} </br>
+			{% endfor %}
+	</div>
+	<h5>and will be notified when they feature on a new PurplePoster.....</h5></br>
+	<h5>You also added the following Purple Posters into your watch list and will be emailed the evening before the event:</h5>
+	<div id="user-poster">		
+			{% for user_poster in user_posters %}
+				{{ user_poster.alias }} - {{ user_poster.movie.name }}</br>
+			{% endfor %}
+	</div>
+
+	<h5>And you have following locations stored for alerts:</h5>
+	<div id="user-location">		
+			{% for user_location in user_locations %}
+				{{ user_location.address }} @ ({{ user_location.lat }}, {{ user_location.lon }} ), 
+			{% endfor %}
+	</div>
+</div>
+
+<h3>Update User Profile Information</h3>
+<hr />
+<div id="user-profile-forms">
+	<form method="post" action="updateProfile/">
+	{% csrf_token %}
+		<div class="control-group">
+			<div class="controls">
+				E-mail Address: <input type="text"  name="email-text" placeholder="user@email.com" value="{{ user.email }}">
+			</div>
+		</div>
+		<button class="btn btn-primary" type="submit">
+			Update Profile!
+		</button>
+	</form>
+</div>
+
+{% endblock %}
+
+

@@ -1,0 +1,41 @@
+{% load humanize %}
+
+
+{% for image in poster.image.all %}
+<img src="{{ image.imageURL }}" />
+{% endfor %}
+
+{% if linkToPosterDetail %}
+<a href="/poster/{{ poster.pk }}/#main-info">
+{% endif %}
+
+
+<h1>
+{{ poster.movie.name }}
+{% if poster.movie.name != poster.alias %}
+<small>({{ poster.alias }})</small>
+{% endif %}
+</h1>
+
+{{ poster.startTime|naturalday:"l, F j"|capfirst }}
+
+at {{ poster.location }}
+
+{% if poster.locationLat and poster.locationLon %}
+({{ poster.locationLat }}, {{ poster.locationLon }})
+{% endif %}
+
+	
+{% if linkToPosterDetail %}
+</a>
+{% endif %}
+
+
+<script type="text/javascript">
+	window.map_pins.push({
+		info_content: "<h3>{{ poster.alias }}</h3>",
+		lat: {{ poster.locationLat }},
+		lon: {{ poster.locationLon }},
+	});
+</script>
+
